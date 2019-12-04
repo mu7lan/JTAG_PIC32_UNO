@@ -65,7 +65,7 @@ int USART_Receive(uint8_t *buffer) {
 
 void TCK_tick () {
 	digitalWrite(TCK, HIGH);
-	_delay_us(1);
+	_delay_us(10);
 	digitalWrite(TCK, LOW);
 }
 
