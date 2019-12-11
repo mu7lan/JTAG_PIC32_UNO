@@ -61,6 +61,8 @@ int USART_Receive(uint8_t *buffer) {
         return ERROR;// <- is signed
 
 	*buffer = UDR0;
+
+	return true;
 }
 
 void TCK_tick () {
@@ -69,14 +71,39 @@ void TCK_tick () {
 	digitalWrite(TCK, LOW);
 }
 
-uint32_t get_IDCODE() {}
-
 void control_LED(uint8_t command) {}
 
 uint8_t state_pin29() {}
 
+void get_IDCODE() {
+	/* TMS Header  = 1100 */
+	digitalWrite(TMS, HIGH);
+	TCK_tick();
+	TCK_tick();
+
+	digitalWrite(TMS, LOW);
+	TCK_tick();
+	TCK_tick();
+
+	/* Command = 0x01 ID CODE */
+	digitalWrite(TDO, HIGH);
+	TCK_tick();
+
+	/* command MSB + TMS(1) */
+	digitalWrite(TMS, HIGH);
+	TCK_tick();
+
+	/* TMS Footer = 10 */
+	TCK_tick();
+	digitalWrite(TMS, LOW);
+	TCK_tick();
+}
+
 void setup() {
+
 	USART_Init(MYUBRR);
+
+	USART_Transmit_String("Serial comm6 has started...");
 
 	pinMode(TMS, OUTPUT);
 	pinMode(TCK, OUTPUT);
@@ -92,6 +119,8 @@ void loop() {
 		{
 			case 'd':
 				get_IDCODE();
+				Serial.print("ID CODE from PIC32: ");
+				Serial.println(TDI);
 				break;
 			case 1:
 				control_LED(data);
@@ -104,10 +133,11 @@ void loop() {
 				break;
 			
 			default:
-				/* print something */
+				
 				USART_Transmit_String("DEFAULT");
 				break;
 
 		}
 	}
+	
 }
