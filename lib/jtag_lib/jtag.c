@@ -4,9 +4,9 @@
 void TCK_tick() {
 
 	digitalWrite(TCK, HIGH);
-	delay(3);
+	delay(5);
 	digitalWrite(TCK, LOW);
-	delay(3);
+	delay(5);
 }
 
 void IR() {
@@ -21,13 +21,13 @@ void sendBits(boolean tdo, boolean tms, uint8_t size) {
 
     for (int i = 0; i < size; i++) {
         digitalWrite(TMS, tms);
-        digitalWrite(TDO, tms);
+        digitalWrite(TDO, tdo);
         TCK_tick();
     }
     
 }
 
-void sendCommand(uint8_t cmd) {
+void sendCommandInstruction(uint8_t cmd) {
 
     /* Instruction Register State */
     IR();
@@ -53,20 +53,6 @@ uint32_t readData(uint8_t size) {
     
 }
 
-uint32_t getIDcode() {
 
-    uint32_t received_data = 0;
 
-    sendCommand(IDCODE);
-
-    /*  Change to Data Register state in order to be able to read values in TDI */
-    DR();
-
-    received_data = readData(IDCODE_SIZE);
-
-    sendBits(EXIT_TDO >> 1, EXIT_TMS, EXIT_SIZE - 1);
-
-    return received_data;
-
-}
 

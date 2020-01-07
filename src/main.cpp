@@ -1,17 +1,13 @@
 #include <Arduino.h>
-#include "jtag.h"
-
-/* Use AVR USART */
-//#define USART
+extern "C" {
+	#include "jtag.h"
+	#include "sele.h"
+}
 
 #define ERROR -1
 #define BAUD 9600
 
 uint8_t data;
-
-void control_LED(uint8_t command) {}
-
-uint8_t state_pin29() {}
 
 void setup() {
 
@@ -31,20 +27,19 @@ void loop() {
 			{
 				case 'd':
 					Serial.print("ID CODE from PIC32: ");
-					Serial.println(getIDCODE());
+					Serial.println(getIDcode());
 					break;
 				case 1:
-					control_LED(data);
+					ledState(LED_INPUT, HIGH);
 					break;
 				case 0:
-					control_LED(data);
+					ledState(LED_INPUT, LOW);
 					break;
 				case 'b':
-					state_pin29();
+					Serial.print(buttonState() ? "Button is pressed!" : "Button is released!");
 					break;
 				
 				default:
-					
 					Serial.println("Default");
 				break;
 
