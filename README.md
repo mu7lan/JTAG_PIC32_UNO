@@ -3,6 +3,10 @@ Control a ChipKIT Uno32 board just using its MCU JTAG port connected to an Ardui
 
 ## Contents
 
+- [System Concept](#System-Concept)
+- [Requirements](#Requirements)
+- [JTAG & PIC32MX320F128H](#JTAG-&-PIC32MX320F128H)
+
 ## System Concept
 
 ![JTAG_UNO](https://user-images.githubusercontent.com/38976366/72176750-f5518600-33d6-11ea-9c91-0354eb38676a.png)
@@ -82,9 +86,18 @@ The LED matches with RF0 signal and from the Boundary-Scan Description Language 
  
 Since EXTEST instruction allows the external circuitry and interconnections to be tested, it is necessary to write it into the instruction register.
 
-After that, and on Idle state, it should enter Data Register column, stoping at Shift-DR state.
-Runnning all cell positions from 0 to 147. 
- 
+After that, and on Idle state, should enter Data Register column, stoping at Shift-DR state. Runnning all cell positions from 0 to 147. 
+
+All cells should be written set to 0, but not the cells in position 19, 20 or 129, because 19 is the output cell from the LED, 20 is the output-enable and 129 is MCLR register.
+The output cell at 19 should be set to 1 when it is supposed to be turned ON and set to 0 when it is supposed to be turned OFF. The output-enable, as the name says, should be set to 1 to enable the output. And finally, MCLR should be set to 1 because setting it to 0, will force an exit from Enhanced JTAG mode. 
+
+Further it returns into idle state.
+
  #### Read button state
  
+Since SAMPLE instruction captures the I/O states of the component, it is necessary to write it into the instruction register.
+ 
+After that, and on idle state, should enter Data Register column, stoping at Shift-DR state. The state of the button is read after N TCK cycles, where N is the button I/O pin.
+
+Further it returns into idle state.
  
