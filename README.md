@@ -80,6 +80,11 @@ The LED matches with RF0 signal and from the Boundary-Scan Description Language 
  
  #### Turn ON/OFF LED
  
+Since EXTEST instruction allows the external circuitry and interconnections to be tested, it is necessary to write it into the instruction register.
+
+After that, and on Idle state, it should enter Data Register column, stoping at Shift-DR state.
+Runnning all cell positions from 0 to 147. 
+ 
  #### Read button state
  
  
