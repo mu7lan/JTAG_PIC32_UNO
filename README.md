@@ -6,11 +6,11 @@ Control a ChipKIT Uno32 board just using its MCU JTAG port connected to an Ardui
 - [System Concept](#System-Concept)
 - [Requirements](#Requirements)
 - [JTAG & PIC32MX320F128H](#JTAG-&-PIC32MX320F128H)
- - [IEEE 1149.1 TAP controller](IEEE-1149.1-TAP-controller)
- - [Instruction Register](#Instruction-Register)
- - [Data Register](#Data-Register)
- - [Turn ON/OFF LED](#Turn-ON/OFF-LED)
- - [Read button state](#Read-button-state)
+    - [IEEE 1149.1 TAP controller](IEEE-1149.1-TAP-controller)
+    - [Instruction Register](#Instruction-Register)
+    - [Data Register](#Data-Register)
+    - [Turn ON/OFF LED](#Turn-ON/OFF-LED)
+    - [Read button state](#Read-button-state)
 
 ## System Concept
 
