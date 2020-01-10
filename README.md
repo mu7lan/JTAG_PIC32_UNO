@@ -5,7 +5,12 @@ Control a ChipKIT Uno32 board just using its MCU JTAG port connected to an Ardui
 
 - [System Concept](#System-Concept)
 - [Requirements](#Requirements)
-- [JTAG & PIC32MX320F128H](#JTAG & PIC32MX320F128H)
+- [JTAG & PIC32MX320F128H](#JTAG-&-PIC32MX320F128H)
+ - [IEEE 1149.1 TAP controller](IEEE-1149.1-TAP-controller)
+ - [Instruction Register](#Instruction-Register)
+ - [Data Register](#Data-Register)
+ - [Turn ON/OFF LED](#Turn-ON/OFF-LED)
+ - [Read button state](#Read-button-state)
 
 ## System Concept
 
@@ -36,7 +41,7 @@ The first thing to do, is to *reset*. In other words, be sure that the TAP contr
 By now, it is possible to check that to enter in the Intruction Register Shifter (SHIFT-IR), it is necessary 5 TCK cycles and for each, the TMS should be: 0, 1, 1, 0 and 0. Stoping at Shift-IR.
 For this case, IR_TMS can be defined as 0b00110.
 
-#### Instructions
+#### Instruction Register
 
 The instructions are defined by the microcontroller manufacturer:
 
