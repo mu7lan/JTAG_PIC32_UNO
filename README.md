@@ -5,7 +5,7 @@ Control a ChipKIT Uno32 board just using its MCU JTAG port connected to an Ardui
 
 - [System Concept](#System-Concept)
 - [Requirements](#Requirements)
-- [JTAG & PIC32MX320F128H](#JTAG-&-PIC32MX320F128H)
+- [JTAG & PIC32MX320F128H](#JTAG & PIC32MX320F128H)
 
 ## System Concept
 
