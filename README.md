@@ -78,4 +78,8 @@ The LED matches with RF0 signal and from the Boundary-Scan Description Language 
 ````
  Now it is possible to *write* in this I/O pin through JTAG.
  
+ #### Turn ON/OFF LED
+ 
+ #### Read button state
+ 
  
