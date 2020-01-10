@@ -12,13 +12,13 @@ uint32_t getIDcode() {
     DR();
     received_data = readData(IDCODE_SIZE);
 
-    sendBits(EXIT_TDO >> 1, EXIT_TMS, EXIT_SIZE - 1);
+    SendBitsWithSize(0, EXIT_TMS, EXIT_SIZE);
 
     return received_data;
 
 }
 
-void ledState(uint8_t position ,uint8_t how) {
+void ledState(uint8_t how) {
 
     /* State of external test */
     sendCommandInstruction(EXTERNALTEST);
@@ -32,22 +32,23 @@ void ledState(uint8_t position ,uint8_t how) {
         switch (i)
         {
         case LED_OUTPUT:
-            sendBits(1, 0, how);
+            sendBits(how, 0);
             break;
         case LED_CONTROL:
-            sendBits(1, 0, 1);
+            sendBits(1, 0);
             break;
         case MCLR:
-            sendBits(1, 0, 1);
+            sendBits(1, 0);
             break;
         
         default:
-            sendBits(0, 0, 1);
+            sendBits(0, 0);
             break;
         }
     }
 
-    sendBits(EXIT_TDO, EXIT_TMS, EXIT_SIZE);
+    /* Last shift from boundary scan */
+    SendBitsWithSize(0, EXIT_TMS, EXIT_SIZE);
     
 }
 
@@ -60,11 +61,11 @@ boolean buttonState() {
 
     /* Shift BUTTON_REGISTERS bits */
     for (int i = 0; i < BUTTON_REGISTER; i++)
-        sendBits(0, 0, 1);
+        sendBits(0, 0);
 
     state = digitalRead(TDI);
 
-    sendBits(EXIT_TDO, EXIT_TMS, EXIT_SIZE);
+    SendBitsWithSize(0, EXIT_TMS, EXIT_SIZE);
 
     return state;
 

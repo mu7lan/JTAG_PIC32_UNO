@@ -1,28 +1,45 @@
 #include <Arduino.h>
 #include "jtag.h"
+#include <util/delay.h>
 
 void TCK_tick() {
 
 	digitalWrite(TCK, HIGH);
-	delay(5);
+	_delay_us(10);
 	digitalWrite(TCK, LOW);
-	delay(5);
+	_delay_us(10);
+}
+
+void Reset() {
+    digitalWrite(TMS, HIGH);
+    for (int i = 0; i < 5; i++)
+    {
+        TCK_tick();
+    }
 }
 
 void IR() {
-    sendBits(IR_TDO, IR_TMS, IR_SIZE);
+    Reset();
+    SendBitsWithSize(IR_TDO, IR_TMS, IR_SIZE);
 }
 
 void DR() {
-    sendBits(DR_TDO, DR_TMS, DR_SIZE);
+    SendBitsWithSize(DR_TDO, DR_TMS, DR_SIZE);
 }
 
-void sendBits(boolean tdo, boolean tms, uint8_t size) {
+void sendBits(uint8_t tdo, uint8_t tms) {
 
-    for (int i = 0; i < size; i++) {
-        digitalWrite(TMS, tms);
-        digitalWrite(TDO, tdo);
-        TCK_tick();
+    digitalWrite(TMS, tms);
+    digitalWrite(TDO, tdo);
+    TCK_tick();
+    
+}
+
+void SendBitsWithSize(uint8_t tdo, uint8_t tms, uint8_t size) {
+
+    for (int i = 0; i < size; i++)
+    {
+        sendBits(tdo & (1 << i), tms & (1 << i));
     }
     
 }
@@ -31,10 +48,11 @@ void sendCommandInstruction(uint8_t cmd) {
 
     /* Instruction Register State */
     IR();
-    sendBits(cmd, IR_UPDATE_TMS, IR_UPDATE_SIZE); 
 
-    /* JTAG SHIFTS 1 after leaving shifthing state */
-    sendBits(EXIT_TDO >> 1, EXIT_TMS, EXIT_SIZE - 1);
+    SendBitsWithSize(cmd, IR_UPDATE_TMS, IR_UPDATE_SIZE);
+
+    SendBitsWithSize(0, EXIT_TMS >> 1, EXIT_SIZE - 1);
+    
 }
 
 uint32_t readData(uint8_t size) {
@@ -43,10 +61,9 @@ uint32_t readData(uint8_t size) {
 
     for (int i = 0; i < size; i++)
     {
-        value |= digitalRead(TDI) << i;
-
+        value |= (uint32_t) digitalRead(TDI) << i;
         /* Force shift new position */
-        sendBits(0, 0, 1);
+        sendBits(0, 0);
     }
 
     return value;

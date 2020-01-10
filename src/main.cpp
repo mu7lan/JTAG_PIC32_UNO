@@ -27,16 +27,16 @@ void loop() {
 			{
 				case 'd':
 					Serial.print("ID CODE from PIC32: ");
-					Serial.println(getIDcode());
+					Serial.println(getIDcode(), HEX);
 					break;
-				case 1:
-					ledState(LED_INPUT, HIGH);
+				case '1':
+					ledState(HIGH);
 					break;
-				case 0:
-					ledState(LED_INPUT, LOW);
+				case '0':
+					ledState(LOW);
 					break;
 				case 'b':
-					Serial.print(buttonState() ? "Button is pressed!" : "Button is released!");
+					Serial.print(buttonState() ? "Button is released!" : "Button is pressed!d");
 					break;
 				
 				default:

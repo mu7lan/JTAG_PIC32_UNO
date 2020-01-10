@@ -42,6 +42,7 @@ by either forcing various test patterns on the output pins, or capturing test re
 void TCK_tick();
 void IR();
 void DR();
-void sendBits(bool tdo, bool tms, uint8_t size);
+void sendBits(uint8_t tdo, uint8_t tms);
+void SendBitsWithSize(uint8_t tdo, uint8_t tms, uint8_t size);
 void sendCommandInstruction(uint8_t cmd);
 uint32_t readData(uint8_t size);

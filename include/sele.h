@@ -12,7 +12,7 @@ uint32_t getIDcode();
 /**
  * Changes Led State (ON/OFF)
  * */
-void ledState(uint8_t position ,uint8_t how);
+void ledState(uint8_t how);
 
 /**
  * Reads Button State
