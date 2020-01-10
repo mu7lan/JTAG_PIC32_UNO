@@ -1,5 +1,5 @@
 # JTAG_PIC32_UNO
-Control a ChipKIT Uno32 board just using its MCU JTAG port connected to an Arduino
+Control a ChipKIT Uno32 board using its MCU JTAG port connected to an Arduino
 
 ## Contents
 
